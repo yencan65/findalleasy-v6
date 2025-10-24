@@ -1,49 +1,37 @@
-import express from "express";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
-import cors from "cors";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import cors from 'cors';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
 
-dotenv.config();
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(morgan('dev'));
 
-// ---- Mongo bağlan ----
-const MONGODB_URI = process.env.MONGODB_URI || "";
+const MONGODB_URI = process.env.MONGODB_URI || '';
 if (MONGODB_URI) {
-  mongoose.connect(MONGODB_URI)
-    .then(()=>console.log("✅ MongoDB bağlandı"))
-    .catch(err=>console.error("❌ MongoDB hata:", err.message));
-} else {
-  console.warn("⚠️ MONGODB_URI .env'de tanımlı değil. (Geliştirme için devam ediliyor.)");
+  mongoose.connect(MONGODB_URI).then(()=>console.log('✅ MongoDB Connected')).catch(err=>console.error('MongoDB error:',err.message));
 }
 
-// ---- Basit API örnekleri ----
-app.get("/api/health", (req,res)=>res.json({ok:true, time:new Date()}));
-
-// Vitrin akıllı öneri (IP/dil/placeholders temelli yalın demo)
-app.post("/api/suggestions", (req,res)=>{
-  const { locale="en", topic } = req.body || {};
-  const byLocale = {
-    tr:["Bilet","Otel","Sigorta","Yemek"],
-    de:["Tickets","Hotels","Versicherung","Essen"],
-    ar:["تذاكر","فنادق","تأمين","طعام"],
-    zh:["机票","酒店","保险","美食"],
-    en:["Tickets","Hotels","Insurance","Food"]
-  };
-  const items = byLocale[locale] || byLocale.en;
-  res.json({items, topic});
+app.get('/api/health', (req,res)=>res.json({ok:true}));
+app.get('/api/trending', (req,res)=>{
+  res.json({
+    items: [
+      { _id:1, title:"Hotel Deals", price:99, currency:"USD" },
+      { _id:2, title:"Fashion Trends", price:49, currency:"USD" },
+      { _id:3, title:"Flights", price:199, currency:"USD" }
+    ]
+  });
 });
 
-// ---- Frontend build'i serve et ----
-app.use(express.static(path.join(__dirname, "frontend", "dist")));
-app.get("*", (req,res)=>{
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-});
+const distDir = path.join(__dirname, 'frontend', 'dist');
+app.use(express.static(distDir));
+app.get('*', (req, res) => res.sendFile(path.join(distDir, 'index.html')));
 
-const PORT = process.env.PORT || 10000;
-app.listen(PORT, ()=>console.log(`🚀 Server ${PORT} portunda`));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, ()=>console.log(`🚀 Server running on http://localhost:${PORT}`));

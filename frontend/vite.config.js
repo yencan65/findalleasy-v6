@@ -1,20 +1,15 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
-
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
-  root: './frontend',  // <-- kök dizini açık belirt
+  root: './frontend',
   build: {
-    outDir: resolve(__dirname, 'dist'),
-    emptyOutDir: true,
-    rollupOptions: {
-      input: resolve(__dirname, 'public/index.html')  // <-- giriş dosyası burada
-    }
+    outDir: 'dist',
+    emptyOutDir: true
   },
   server: {
     proxy: {
       '/api': 'http://localhost:3000'
     }
   }
-})
+});
