@@ -1,18 +1,17 @@
-# Findalleasy v6 Final Stable Fixed
+# Findalleasy v6 React JSX Stable
 
-✅ Render ve lokal için tamamen hazır sürüm.
-- React (Vite) frontend
-- Express backend
-- Tek package.json
+🚀 100% Render-ready React + Express setup (JSX-safe)
 
 ### Build Command
+```
 npm install && npm run build
+```
 
 ### Start Command
+```
 node server.js
+```
 
-### Lokal çalıştır
-npm install
-npm run build
-npm start
-Aç: http://localhost:3000
+### Notes
+- Uses `.jsx` for React entry to prevent "Expression expected" errors.
+- Vite + React + Express integrated in one deployable service.
