@@ -1,11 +1,18 @@
-# Findalleasy v6 Final Stable
-Render için tek tıkla deploy edilebilir sürüm.
+# Findalleasy v6 Final Stable Fixed
 
-## 🚀 Kurulum
-```
+✅ Render ve lokal için tamamen hazır sürüm.
+- React (Vite) frontend
+- Express backend
+- Tek package.json
+
+### Build Command
+npm install && npm run build
+
+### Start Command
+node server.js
+
+### Lokal çalıştır
 npm install
 npm run build
 npm start
-```
-Build Command: `npm install && npm run build`
-Start Command: `node server.js`
+Aç: http://localhost:3000
