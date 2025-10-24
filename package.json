@@ -5,8 +5,12 @@
   "type": "module",
   "description": "FindAllEasy v6.0 — Fusion Global Harmony (Full-stack, tek Render servisi)",
   "scripts": {
-    "build-client": "cd frontend && npm ci --no-audit --no-fund && npm run build",
-    "start": "node server.js"
+  "dev": "node server.js",
+  "build": "vite build --config frontend/vite.config.js",
+  "start": "node server.js",
+  "seed": "node server.js --seed"
+},
+
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -17,3 +21,4 @@
   },
   "engines": { "node": ">=18" }
 }
+
